@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { BRAND_NAME, BRAND_TAGLINE, WHATSAPP_HELP_TEXT } from "@/lib/catalog";
 import {
@@ -16,7 +17,16 @@ export function Footer() {
     <footer className="bg-dark text-cream">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <p className="font-heading text-3xl">{BRAND_NAME}</p>
+          <div className="relative h-24 w-24 overflow-hidden rounded-2xl border border-gold/25 bg-date shadow-soft">
+            <Image
+              src="/images/logodg.jpg"
+              alt={`${BRAND_NAME} logo`}
+              fill
+              sizes="96px"
+              className="object-cover"
+            />
+          </div>
+          <p className="mt-5 font-heading text-3xl">{BRAND_NAME}</p>
           <p className="mt-2 font-heading text-xl italic text-gold/90">{BRAND_TAGLINE}</p>
           <p className="mt-4 max-w-md text-sm leading-7 text-cream/74">
             Coffrets de dattes artisanales, garnies à la main au Maroc avec des parfums gourmands,
