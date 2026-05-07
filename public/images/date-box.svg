@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 525" role="img" aria-label="Coffret de dattes">
+  <rect width="700" height="525" fill="#f5e6d3"/>
+  <circle cx="114" cy="96" r="145" fill="#d8a7a3" opacity=".25"/>
+  <circle cx="628" cy="430" r="160" fill="#c9a84c" opacity=".2"/>
+  <rect x="116" y="80" width="468" height="365" rx="34" fill="#fffdf7" stroke="#c9a84c" stroke-width="8"/>
+  <rect x="156" y="122" width="388" height="280" rx="26" fill="#3e2723"/>
+  <g fill="#7a3f2a">
+    <ellipse cx="235" cy="205" rx="46" ry="64" transform="rotate(-18 235 205)"/>
+    <ellipse cx="350" cy="196" rx="46" ry="64" transform="rotate(12 350 196)"/>
+    <ellipse cx="466" cy="211" rx="46" ry="64" transform="rotate(-14 466 211)"/>
+    <ellipse cx="255" cy="320" rx="46" ry="64" transform="rotate(18 255 320)"/>
+    <ellipse cx="374" cy="326" rx="46" ry="64" transform="rotate(-18 374 326)"/>
+    <ellipse cx="480" cy="314" rx="46" ry="64" transform="rotate(16 480 314)"/>
+  </g>
+  <g fill="#c9a84c">
+    <circle cx="232" cy="184" r="17"/>
+    <circle cx="352" cy="174" r="17"/>
+    <circle cx="466" cy="190" r="17"/>
+    <circle cx="254" cy="298" r="17"/>
+    <circle cx="374" cy="302" r="17"/>
+    <circle cx="480" cy="292" r="17"/>
+  </g>
+</svg>

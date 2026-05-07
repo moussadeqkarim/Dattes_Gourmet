@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --cream: #fffdf7;
+  --beige: #f5e6d3;
+  --gold: #c9a84c;
+  --chocolate: #3e2723;
+  --rose: #d8a7a3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 8%, rgba(216, 167, 163, 0.22), transparent 28rem),
+    linear-gradient(180deg, #fffdf7 0%, #f8ecdd 46%, #fffdf7 100%);
+  color: var(--chocolate);
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: var(--font-inter), Inter, sans-serif;
+}
+
+::selection {
+  background: rgba(201, 168, 76, 0.32);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.luxury-border {
+  border: 1px solid rgba(201, 168, 76, 0.26);
+}
+
+.hero-mask {
+  mask-image: linear-gradient(180deg, black 0%, black 82%, transparent 100%);
+}
+
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-cream;
+}

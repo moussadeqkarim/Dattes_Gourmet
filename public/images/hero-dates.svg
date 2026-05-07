@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Coffret de dattes premium">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#2d1714"/>
+      <stop offset="0.48" stop-color="#6f3b27"/>
+      <stop offset="1" stop-color="#f5e6d3"/>
+    </linearGradient>
+    <radialGradient id="gold" cx="50%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#fff3bd"/>
+      <stop offset="0.48" stop-color="#c9a84c"/>
+      <stop offset="1" stop-color="#7a3f2a"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="24" stdDeviation="22" flood-color="#1d0d0b" flood-opacity=".34"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <path d="M0 750C280 640 462 740 696 620c274-140 528-84 904-244v624H0Z" fill="#fffdf7" opacity=".15"/>
+  <g filter="url(#shadow)">
+    <ellipse cx="1050" cy="550" rx="410" ry="250" fill="#fffdf7" opacity=".92"/>
+    <ellipse cx="1050" cy="550" rx="350" ry="202" fill="#f5e6d3"/>
+    <g>
+      <ellipse cx="860" cy="475" rx="78" ry="116" fill="#6f2d1f" transform="rotate(-28 860 475)"/>
+      <ellipse cx="1000" cy="430" rx="78" ry="116" fill="#7a3f2a" transform="rotate(16 1000 430)"/>
+      <ellipse cx="1156" cy="466" rx="78" ry="116" fill="#532419" transform="rotate(-12 1156 466)"/>
+      <ellipse cx="930" cy="610" rx="84" ry="126" fill="#8a482b" transform="rotate(22 930 610)"/>
+      <ellipse cx="1108" cy="626" rx="84" ry="126" fill="#6a2f21" transform="rotate(-21 1108 626)"/>
+      <ellipse cx="1248" cy="586" rx="74" ry="112" fill="#7c3f27" transform="rotate(24 1248 586)"/>
+    </g>
+    <g fill="url(#gold)">
+      <circle cx="838" cy="443" r="25"/>
+      <circle cx="1012" cy="395" r="25"/>
+      <circle cx="1155" cy="431" r="25"/>
+      <circle cx="932" cy="572" r="28"/>
+      <circle cx="1118" cy="584" r="28"/>
+      <circle cx="1256" cy="552" r="23"/>
+    </g>
+    <g fill="#e6d9be" opacity=".78">
+      <circle cx="870" cy="525" r="7"/>
+      <circle cx="1018" cy="475" r="7"/>
+      <circle cx="1168" cy="515" r="7"/>
+      <circle cx="955" cy="655" r="8"/>
+      <circle cx="1092" cy="682" r="8"/>
+      <circle cx="1230" cy="628" r="7"/>
+    </g>
+  </g>
+</svg>
