@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import type { Database } from "@/types/database";
+import { getSupabasePublicKey, getSupabaseUrl } from "./config";
 
 type CookieToSet = {
   name: string;
@@ -10,10 +11,16 @@ type CookieToSet = {
 
 export function createClient() {
   const cookieStore = cookies();
+  const url = getSupabaseUrl();
+  const key = getSupabasePublicKey();
+
+  if (!url || !key) {
+    throw new Error("Supabase server configuration is missing.");
+  }
 
   return createServerClient<Database, "public", any>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    url,
+    key,
     {
       cookies: {
         getAll() {

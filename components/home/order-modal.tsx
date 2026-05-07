@@ -6,6 +6,7 @@ import { X } from "lucide-react";
 import { boxes, classicFlavors, exoticFlavors, paymentMethods } from "@/lib/catalog";
 import { createWhatsAppUrl } from "@/lib/contact";
 import { createClient } from "@/lib/supabase/client";
+import { hasSupabaseConfig } from "@/lib/supabase/config";
 import { cn, formatMad } from "@/lib/utils";
 import type { BoxOption, PaymentMethod } from "@/types/catalog";
 
@@ -21,13 +22,6 @@ type OrderResult = {
   savedToAdmin: boolean;
   orderReference: string;
 };
-
-function hasSupabaseConfig() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-
-  return Boolean(url && key && !url.includes("your-project-ref") && !key.includes("your-supabase"));
-}
 
 async function withTimeout<T>(promise: PromiseLike<T>, timeoutMs = 12000) {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
