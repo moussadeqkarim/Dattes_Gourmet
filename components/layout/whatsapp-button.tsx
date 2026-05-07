@@ -10,7 +10,7 @@ export function WhatsAppButton() {
       href={createWhatsAppUrl(message)}
       target="_blank"
       rel="noreferrer"
-      className="focus-ring fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full bg-[#1FAF5A] px-4 py-3 text-sm font-semibold text-white shadow-luxe transition hover:-translate-y-0.5 hover:bg-[#168946]"
+      className="focus-ring fixed bottom-5 right-5 z-50 flex items-center gap-3 rounded-full bg-date px-4 py-3 text-sm font-semibold text-cream shadow-luxe ring-1 ring-gold/25 transition hover:-translate-y-0.5 hover:bg-chocolate"
       aria-label="Commander via WhatsApp"
     >
       <MessageCircle size={19} />

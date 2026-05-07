@@ -44,7 +44,7 @@ export function MenuSection() {
               }}
               whileHover={{ y: -8, scale: 1.03 }}
               transition={{ duration: 0.35 }}
-              className="luxury-border group rounded-[1.75rem] bg-white p-5 shadow-soft"
+              className="luxury-border group rounded-[1.75rem] bg-beige p-5 shadow-soft"
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-[1.35rem] bg-beige">
                 <Image
@@ -60,14 +60,14 @@ export function MenuSection() {
                   <h3 className="font-heading text-2xl text-chocolate">{box.displayName}</h3>
                   <p className="mt-3 text-sm leading-6 text-chocolate/62">{box.description}</p>
                 </div>
-                <p className="whitespace-nowrap rounded-full bg-beige px-4 py-2 text-sm font-bold text-date">
+                <p className="whitespace-nowrap rounded-full bg-cream px-4 py-2 text-sm font-bold text-date">
                   {formatMad(box.price)}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedBox(box)}
-                className="focus-ring mt-6 w-full rounded-full bg-chocolate px-5 py-3 text-sm font-semibold text-cream transition hover:bg-date"
+                className="focus-ring mt-6 w-full rounded-full bg-date px-5 py-3 text-sm font-semibold text-cream transition hover:bg-chocolate"
               >
                 Commander
               </button>

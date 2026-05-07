@@ -9,23 +9,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        cream: "#FFFDF7",
-        beige: "#F5E6D3",
-        gold: "#C9A84C",
-        chocolate: "#3E2723",
-        rose: "#D8A7A3",
-        date: "#8F1538"
+        dark: "#1A0B0E",
+        chocolate: "#261317",
+        date: "#5A2634",
+        plum: "#3A2228",
+        rose: "#9B5A6B",
+        mauve: "#B77A88",
+        gold: "#C8BAA5",
+        cream: "#EFE6DA",
+        beige: "#F6EEE5",
+        taupe: "#6F6258"
       },
       fontFamily: {
         heading: ["var(--font-playfair)", "Georgia", "serif"],
         body: ["var(--font-inter)", "Inter", "sans-serif"]
       },
       boxShadow: {
-        luxe: "0 24px 60px rgba(62, 39, 35, 0.13)",
-        soft: "0 14px 34px rgba(62, 39, 35, 0.10)"
+        luxe: "0 24px 60px rgba(38, 19, 23, 0.14)",
+        soft: "0 14px 34px rgba(38, 19, 23, 0.10)"
       },
       backgroundImage: {
-        "gold-line": "linear-gradient(90deg, transparent, rgba(201,168,76,.78), transparent)"
+        "gold-line": "linear-gradient(90deg, transparent, rgba(200,186,165,.78), transparent)"
       }
     }
   },

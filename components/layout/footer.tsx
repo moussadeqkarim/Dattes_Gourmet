@@ -13,7 +13,7 @@ export function Footer() {
   const whatsappUrl = createWhatsAppUrl("Bonjour, je souhaite commander un coffret de dattes.");
 
   return (
-    <footer className="bg-date text-cream">
+    <footer className="bg-dark text-cream">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <p className="font-heading text-3xl">{BRAND_NAME}</p>

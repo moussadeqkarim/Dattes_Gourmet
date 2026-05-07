@@ -4,11 +4,16 @@
 
 :root {
   color-scheme: light;
-  --cream: #fffdf7;
-  --beige: #f5e6d3;
-  --gold: #c9a84c;
-  --chocolate: #3e2723;
-  --rose: #d8a7a3;
+  --dark: #1a0b0e;
+  --chocolate: #261317;
+  --date: #5a2634;
+  --plum: #3a2228;
+  --rose: #9b5a6b;
+  --mauve: #b77a88;
+  --gold: #c8baa5;
+  --cream: #efe6da;
+  --beige: #f6eee5;
+  --taupe: #6f6258;
 }
 
 * {
@@ -22,8 +27,9 @@ html {
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 20% 8%, rgba(216, 167, 163, 0.22), transparent 28rem),
-    linear-gradient(180deg, #fffdf7 0%, #f8ecdd 46%, #fffdf7 100%);
+    radial-gradient(circle at 20% 8%, rgba(183, 122, 136, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 18%, rgba(200, 186, 165, 0.22), transparent 24rem),
+    linear-gradient(180deg, #efe6da 0%, #f6eee5 46%, #efe6da 100%);
   color: var(--chocolate);
 }
 
@@ -36,7 +42,7 @@ textarea {
 }
 
 ::selection {
-  background: rgba(201, 168, 76, 0.32);
+  background: rgba(155, 90, 107, 0.28);
 }
 
 .text-balance {
@@ -44,7 +50,7 @@ textarea {
 }
 
 .luxury-border {
-  border: 1px solid rgba(201, 168, 76, 0.26);
+  border: 1px solid rgba(90, 38, 52, 0.18);
 }
 
 .hero-mask {
@@ -52,5 +58,5 @@ textarea {
 }
 
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 focus:ring-offset-cream;
+  @apply focus:outline-none focus:ring-2 focus:ring-rose focus:ring-offset-2 focus:ring-offset-cream;
 }
