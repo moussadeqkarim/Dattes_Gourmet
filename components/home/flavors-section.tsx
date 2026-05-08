@@ -2,11 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/animated-section";
-import { allFlavors } from "@/lib/catalog";
+import { flavorGroups } from "@/lib/catalog";
 
 export function FlavorsSection() {
-  const featuredFlavors = allFlavors.slice(0, 6);
-
   return (
     <AnimatedSection id="saveurs" className="bg-beige/70 px-5 py-24 sm:px-8">
       <div className="mx-auto max-w-7xl">
@@ -18,7 +16,7 @@ export function FlavorsSection() {
             </h2>
             <p className="mt-5 text-base leading-8 text-chocolate/68">
               Une collection gourmande de pralinés, fruits secs, notes fruitées et crèmes fondantes,
-              présentée dans un esprit boutique plutôt qu’une copie de catalogue.
+              présentée dans un esprit boutique plutôt qu&apos;un catalogue figé.
             </p>
           </div>
           <Link
@@ -30,26 +28,44 @@ export function FlavorsSection() {
           </Link>
         </div>
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {featuredFlavors.map((flavor) => (
-            <article
-              key={flavor.slug}
-              className="luxury-border group overflow-hidden rounded-[1.5rem] bg-cream shadow-soft transition duration-300 hover:-translate-y-1"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-white">
-                <Image
-                  src={flavor.image}
-                  alt={flavor.name}
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                />
+        <div className="mt-14 space-y-14">
+          {flavorGroups.map((group) => (
+            <section key={group.id} aria-labelledby={`${group.id}-flavor-title`}>
+              <div className="max-w-3xl">
+                <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
+                  {group.label}
+                </p>
+                <h3
+                  id={`${group.id}-flavor-title`}
+                  className="mt-2 font-heading text-3xl text-chocolate sm:text-4xl"
+                >
+                  {group.description}
+                </h3>
               </div>
-              <div className="p-5">
-                <p className="font-heading text-xl leading-7 text-chocolate">{flavor.name}</p>
-                <p className="mt-2 text-sm italic text-date/75">{flavor.notes}</p>
+
+              <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {group.flavors.map((flavor) => (
+                  <article
+                    key={flavor.slug}
+                    className="luxury-border group overflow-hidden rounded-[1.5rem] bg-cream shadow-soft transition duration-300 hover:-translate-y-1"
+                  >
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#f3dfd0]">
+                      <Image
+                        src={flavor.image}
+                        alt={flavor.name}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-contain p-4 transition duration-500 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="p-5">
+                      <p className="font-heading text-xl leading-7 text-chocolate">{flavor.name}</p>
+                      <p className="mt-2 text-sm italic text-date/75">{flavor.notes}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
-            </article>
+            </section>
           ))}
         </div>
       </div>
