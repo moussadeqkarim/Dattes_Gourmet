@@ -44,8 +44,17 @@ function createOrderReference() {
   return `DG-${numericPart}`;
 }
 
+function normalizeQuantity(value: number) {
+  if (!Number.isFinite(value)) {
+    return 1;
+  }
+
+  return Math.min(20, Math.max(1, Math.floor(value)));
+}
+
 export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
   const [boxSlug, setBoxSlug] = useState(selectedBox?.slug ?? boxes[0].slug);
+  const [quantity, setQuantity] = useState(1);
   const [selectedFlavorSlugs, setSelectedFlavorSlugs] = useState<string[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("bank_transfer");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -57,6 +66,7 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
     () => boxes.find((box) => box.slug === boxSlug) ?? boxes[0],
     [boxSlug]
   );
+  const orderTotal = activeBox.price * quantity;
 
   useEffect(() => {
     if (selectedBox) {
@@ -91,7 +101,21 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
     const selectedFlavors = selectedFlavorSlugs
       .map((slug) => allFlavors.find((flavor) => flavor.slug === slug))
       .filter((flavor): flavor is Flavor => Boolean(flavor));
-    const selectedFlavorLabels = selectedFlavors.map((flavor) => `${flavor.name} (${flavor.categoryLabel})`);
+    const selectedFlavorGroups = flavorGroups
+      .map((group) => ({
+        label: group.label,
+        names: selectedFlavors
+          .filter((flavor) => flavor.category === group.id)
+          .map((flavor) => flavor.name)
+      }))
+      .filter((group) => group.names.length > 0);
+    const selectedFlavorRows = selectedFlavorGroups.map(
+      (group) => `${group.label}: ${group.names.join(", ")}`
+    );
+    const selectedFlavorSummaryLines = selectedFlavorGroups.flatMap((group) => [
+      `${group.label}:`,
+      ...group.names.map((name) => `- ${name}`)
+    ]);
 
     if (customerName.length < 2 || whatsapp.length < 6 || deliveryAddress.length < 2) {
       setError("Veuillez remplir votre nom, votre WhatsApp et votre ville ou adresse de livraison.");
@@ -107,7 +131,10 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
       instagramHandle ? `Instagram: ${instagramHandle}` : "",
       `Adresse: ${deliveryAddress}`,
       `Coffret: ${activeBox.displayName} - ${formatMad(activeBox.price)}`,
-      selectedFlavorLabels.length ? `Saveurs sélectionnées: ${selectedFlavorLabels.join(", ")}` : "",
+      `Quantité: ${quantity}`,
+      `Total: ${formatMad(orderTotal)}`,
+      selectedFlavorSummaryLines.length ? "Saveurs sélectionnées:" : "",
+      ...selectedFlavorSummaryLines,
       `Paiement: ${paymentMethods.find((method) => method.value === paymentMethod)?.label}`,
       specialInstructions ? `Instructions: ${specialInstructions}` : ""
     ].filter(Boolean);
@@ -119,13 +146,13 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
       whatsapp,
       instagram_handle: instagramHandle || null,
       delivery_address: deliveryAddress,
-      box_name: activeBox.displayName,
+      box_name: quantity > 1 ? `${activeBox.displayName} x ${quantity}` : activeBox.displayName,
       box_price_mad: activeBox.price,
-      classic_flavors: selectedFlavorLabels,
+      classic_flavors: selectedFlavorRows,
       exotic_flavors: [],
       payment_method: paymentMethod,
       special_instructions: specialInstructions || null,
-      total_mad: activeBox.price,
+      total_mad: orderTotal,
       currency: "MAD",
       status: "new",
       order_reference: orderReference,
@@ -251,20 +278,38 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
                   <Field label="Ville / Adresse de livraison" name="delivery_address" required />
                 </div>
 
-                <label className="grid gap-2 text-sm font-semibold text-chocolate">
-                  Sélection du coffret
-                  <select
-                    value={boxSlug}
-                    onChange={(event) => setBoxSlug(event.target.value)}
-                    className="focus-ring rounded-2xl border border-chocolate/10 bg-white px-4 py-3 text-sm font-medium text-chocolate"
-                  >
-                    {boxes.map((box) => (
-                      <option value={box.slug} key={box.slug}>
-                        {box.displayName} - {formatMad(box.price)}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <div className="grid gap-5 md:grid-cols-[1fr_160px]">
+                  <label className="grid gap-2 text-sm font-semibold text-chocolate">
+                    Sélection du coffret
+                    <select
+                      value={boxSlug}
+                      onChange={(event) => setBoxSlug(event.target.value)}
+                      className="focus-ring rounded-2xl border border-chocolate/10 bg-white px-4 py-3 text-sm font-medium text-chocolate"
+                    >
+                      {boxes.map((box) => (
+                        <option value={box.slug} key={box.slug}>
+                          {box.displayName} - {formatMad(box.price)}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+
+                  <label className="grid gap-2 text-sm font-semibold text-chocolate">
+                    Quantité
+                    <input
+                      type="number"
+                      min={1}
+                      max={20}
+                      value={quantity}
+                      onChange={(event) => setQuantity(normalizeQuantity(Number(event.target.value)))}
+                      className="focus-ring rounded-2xl border border-chocolate/10 bg-white px-4 py-3 text-sm font-medium text-chocolate"
+                    />
+                  </label>
+                </div>
+
+                <div className="rounded-2xl bg-white px-4 py-3 text-sm font-semibold text-chocolate shadow-soft">
+                  Total estimé: {formatMad(orderTotal)}
+                </div>
 
                 <div className="grid gap-5 lg:grid-cols-3">
                   {flavorGroups.map((group) => (

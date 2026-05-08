@@ -99,7 +99,7 @@ export function DateModelViewer({ modelPath }: DateModelViewerProps) {
             const center = bounds.getCenter(new THREE.Vector3());
             const size = bounds.getSize(new THREE.Vector3());
             const largestSide = Math.max(size.x, size.y, size.z) || 1;
-            const scale = 3.1 / largestSide;
+            const scale = 2.55 / largestSide;
 
             model.position.sub(center);
             model.scale.setScalar(scale);
