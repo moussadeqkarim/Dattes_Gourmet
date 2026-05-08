@@ -3,12 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { boxes, classicFlavors, exoticFlavors, paymentMethods } from "@/lib/catalog";
+import { allFlavors, boxes, flavorGroups, paymentMethods } from "@/lib/catalog";
 import { createWhatsAppUrl } from "@/lib/contact";
 import { createClient } from "@/lib/supabase/client";
 import { hasSupabaseConfig } from "@/lib/supabase/config";
 import { cn, formatMad } from "@/lib/utils";
-import type { BoxOption, PaymentMethod } from "@/types/catalog";
+import type { BoxOption, Flavor, PaymentMethod } from "@/types/catalog";
 
 type OrderModalProps = {
   open: boolean;
@@ -46,8 +46,7 @@ function createOrderReference() {
 
 export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
   const [boxSlug, setBoxSlug] = useState(selectedBox?.slug ?? boxes[0].slug);
-  const [classicSelected, setClassicSelected] = useState<string[]>([]);
-  const [exoticSelected, setExoticSelected] = useState<string[]>([]);
+  const [selectedFlavorSlugs, setSelectedFlavorSlugs] = useState<string[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("bank_transfer");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,6 +88,10 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
     const deliveryAddress = String(formData.get("delivery_address") ?? "").trim();
     const specialInstructions = String(formData.get("special_instructions") ?? "").trim();
     const orderReference = createOrderReference();
+    const selectedFlavors = selectedFlavorSlugs
+      .map((slug) => allFlavors.find((flavor) => flavor.slug === slug))
+      .filter((flavor): flavor is Flavor => Boolean(flavor));
+    const selectedFlavorLabels = selectedFlavors.map((flavor) => `${flavor.name} (${flavor.categoryLabel})`);
 
     if (customerName.length < 2 || whatsapp.length < 6 || deliveryAddress.length < 2) {
       setError("Veuillez remplir votre nom, votre WhatsApp et votre ville ou adresse de livraison.");
@@ -104,8 +107,7 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
       instagramHandle ? `Instagram: ${instagramHandle}` : "",
       `Adresse: ${deliveryAddress}`,
       `Coffret: ${activeBox.displayName} - ${formatMad(activeBox.price)}`,
-      classicSelected.length ? `Saveurs classiques: ${classicSelected.join(", ")}` : "",
-      exoticSelected.length ? `Saveurs exotiques: ${exoticSelected.join(", ")}` : "",
+      selectedFlavorLabels.length ? `Saveurs sélectionnées: ${selectedFlavorLabels.join(", ")}` : "",
       `Paiement: ${paymentMethods.find((method) => method.value === paymentMethod)?.label}`,
       specialInstructions ? `Instructions: ${specialInstructions}` : ""
     ].filter(Boolean);
@@ -119,8 +121,8 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
       delivery_address: deliveryAddress,
       box_name: activeBox.displayName,
       box_price_mad: activeBox.price,
-      classic_flavors: classicSelected,
-      exotic_flavors: exoticSelected,
+      classic_flavors: selectedFlavorLabels,
+      exotic_flavors: [],
       payment_method: paymentMethod,
       special_instructions: specialInstructions || null,
       total_mad: activeBox.price,
@@ -264,19 +266,17 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
                   </select>
                 </label>
 
-                <div className="grid gap-5 md:grid-cols-2">
-                  <MultiSelect
-                    label="Saveurs classiques"
-                    options={classicFlavors.map((flavor) => flavor.name)}
-                    selected={classicSelected}
-                    onChange={setClassicSelected}
-                  />
-                  <MultiSelect
-                    label="Saveurs exotiques"
-                    options={exoticFlavors.map((flavor) => flavor.name)}
-                    selected={exoticSelected}
-                    onChange={setExoticSelected}
-                  />
+                <div className="grid gap-5 lg:grid-cols-3">
+                  {flavorGroups.map((group) => (
+                    <MultiSelect
+                      key={group.id}
+                      label={group.label}
+                      helper={group.description}
+                      options={group.flavors}
+                      selected={selectedFlavorSlugs}
+                      onChange={setSelectedFlavorSlugs}
+                    />
+                  ))}
                 </div>
 
                 <fieldset className="rounded-3xl border border-chocolate/10 bg-white p-4">
@@ -354,42 +354,47 @@ function Field({ label, name, ...props }: FieldProps) {
 
 type MultiSelectProps = {
   label: string;
-  options: string[];
+  helper: string;
+  options: Flavor[];
   selected: string[];
   onChange: (value: string[]) => void;
 };
 
-function MultiSelect({ label, options, selected, onChange }: MultiSelectProps) {
-  function toggleOption(option: string) {
-    if (selected.includes(option)) {
-      onChange(selected.filter((item) => item !== option));
+function MultiSelect({ label, helper, options, selected, onChange }: MultiSelectProps) {
+  function toggleOption(optionSlug: string) {
+    if (selected.includes(optionSlug)) {
+      onChange(selected.filter((item) => item !== optionSlug));
       return;
     }
 
-    onChange([...selected, option]);
+    onChange([...selected, optionSlug]);
   }
 
   return (
     <fieldset className="rounded-3xl border border-chocolate/10 bg-white p-4">
       <legend className="px-2 text-sm font-semibold text-chocolate">{label}</legend>
+      <p className="px-2 text-xs leading-5 text-chocolate/58">{helper}</p>
       <div className="mt-2 grid max-h-56 gap-2 overflow-y-auto pr-1">
         {options.map((option) => (
           <label
-            key={option}
+            key={option.slug}
             className={cn(
               "flex cursor-pointer items-center gap-3 rounded-2xl border px-3 py-2 text-sm transition",
-              selected.includes(option)
+              selected.includes(option.slug)
                 ? "border-gold bg-beige/70 text-chocolate"
                 : "border-chocolate/10 text-chocolate/78 hover:border-gold/70"
             )}
           >
             <input
               type="checkbox"
-              checked={selected.includes(option)}
-              onChange={() => toggleOption(option)}
+              checked={selected.includes(option.slug)}
+              onChange={() => toggleOption(option.slug)}
               className="size-4 rounded border-chocolate/20 accent-gold"
             />
-            {option}
+            <span>
+              <span className="block font-semibold">{option.name}</span>
+              {option.notes ? <span className="block text-xs italic text-date/70">{option.notes}</span> : null}
+            </span>
           </label>
         ))}
       </div>

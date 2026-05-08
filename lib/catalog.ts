@@ -11,192 +11,286 @@ export const CHOCOLATE_DATE_MODEL_PATH = "/models/datte-chocolat.glb";
 
 export const boxes: BoxOption[] = [
   {
-    slug: "box-6-pieces",
-    name: "Box 6 pieces",
-    displayName: "Box 6 pièces",
-    pieces: 6,
-    price: 90,
-    description: "Une première attention raffinée, idéale pour découvrir nos créations."
+    slug: "piece-unique",
+    name: "Single piece",
+    displayName: "1 pièce",
+    pieces: 1,
+    price: 13,
+    description: "Une bouchée précieuse pour découvrir une saveur au choix."
   },
   {
-    slug: "box-8-pieces",
-    name: "Box 8 pieces",
-    displayName: "Box 8 pièces",
-    pieces: 8,
-    price: 120,
-    description: "Un petit coffret précieux pour partager un moment doux et élégant."
-  },
-  {
-    slug: "box-12-pieces",
+    slug: "boite-12-pieces",
     name: "Box 12 pieces",
-    displayName: "Box 12 pièces",
+    displayName: "Boîte de 12",
     pieces: 12,
     price: 190,
-    description: "La sélection signature pour varier les textures et les parfums."
+    description: "Un coffret élégant pour offrir ou composer une première dégustation."
   },
   {
-    slug: "box-16-pieces",
-    name: "Box 16 pieces",
-    displayName: "Box 16 pièces",
-    pieces: 16,
-    price: 230,
-    description: "Un format généreux pour les réunions de famille et les beaux cadeaux."
-  },
-  {
-    slug: "box-18-pieces",
+    slug: "boite-18-pieces",
     name: "Box 18 pieces",
-    displayName: "Box 18 pièces",
+    displayName: "Boîte de 18",
     pieces: 18,
-    price: 270,
-    description: "Un assortiment luxueux pour les amateurs de dattes gourmandes."
+    price: 280,
+    description: "Un assortiment généreux pour varier les familles et les textures."
   },
   {
-    slug: "box-25-pieces",
-    name: "Box 25 pieces",
-    displayName: "Box 25 pièces",
-    pieces: 25,
-    price: 350,
-    description: "Un coffret de fête, pensé pour recevoir avec chaleur et distinction."
+    slug: "boite-21-pieces",
+    name: "Box 21 pieces",
+    displayName: "Boîte de 21",
+    pieces: 21,
+    price: 320,
+    description: "Le format signature pour partager une sélection gourmande et raffinée."
   },
   {
-    slug: "box-30-pieces",
-    name: "Box 30 pieces",
-    displayName: "Box 30 pièces",
-    pieces: 30,
-    price: 430,
-    description: "Une grande dégustation pour explorer toute la richesse du menu."
-  },
-  {
-    slug: "box-35-pieces",
+    slug: "boite-35-pieces",
     name: "Box 35 pieces",
-    displayName: "Box 35 pièces",
+    displayName: "Boîte de 35",
     pieces: 35,
-    price: 480,
-    description: "Un coffret d'exception pour les grandes occasions et les cadeaux premium."
+    price: 490,
+    description: "Un grand coffret de réception, idéal pour une table élégante."
   },
   {
-    slug: "box-55-pieces-2kg",
-    name: "Box 55 pieces (2kg)",
-    displayName: "Box 55 pièces (2kg)",
-    pieces: 55,
-    price: 750,
-    description: "Le coffret prestige, une abondance élégante pour une table mémorable."
+    slug: "boite-45-pieces",
+    name: "Box 45 pieces",
+    displayName: "Boîte de 45",
+    pieces: 45,
+    price: 650,
+    description: "Le coffret prestige pour célébrer les grandes occasions."
+  }
+];
+
+export const chocolateFlavors: Flavor[] = [
+  {
+    slug: "selou-caramel",
+    name: "Selou Caramel",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Selou · Noix · Caramel beurre salé",
+    description: "Selou croquant aux noix et caramel beurre salé, enrobée de chocolat au lait 85%."
+  },
+  {
+    slug: "crunchy-gianduja",
+    name: "Crunchy Gianduja",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    modelPath: CHOCOLATE_DATE_MODEL_PATH,
+    notes: "Gianduja · Noisette · Crunchy",
+    description: "Gianduja noisette façon praliné, parsemée d'éclats crunchy et enrobée de chocolat au lait 35%."
+  },
+  {
+    slug: "praline-amande-chocolate",
+    name: "Praliné amande",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Amande · Chocolat au lait",
+    description: "Crème pralinée aux amandes, enrobée de chocolat au lait 85%."
+  },
+  {
+    slug: "kinder",
+    name: "Kinder",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Crème Kinder · Amandes",
+    description: "Crème Kinder parsemée d'amandes concassées, enrobée de chocolat au lait 85%."
+  },
+  {
+    slug: "eclat-orange",
+    name: "Éclat d'orange",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Amande · Orange · Chocolat noir",
+    description: "Pâte d'amande aux zestes d'orange, enrobée de chocolat noir 90%."
+  },
+  {
+    slug: "rocher-snickers",
+    name: "Rocher Snickers",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Caramel · Cacahuètes · Chocolat",
+    description: "Caramel fondant et cacahuètes croquantes, enrobée de chocolat au lait 85%."
+  },
+  {
+    slug: "arabica-cafe",
+    name: "Arabica café",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Ganache café · Chocolat noir",
+    description: "Fourrée de ganache café et enrobée de chocolat noir intense."
+  },
+  {
+    slug: "lotus-speculos",
+    name: "Lotus Speculos",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Speculos · Chocolat blanc",
+    description: "Crème spéculos et éclats de biscuit croustillants, enrobée de chocolat blanc riche."
+  },
+  {
+    slug: "coconut-bounty",
+    name: "Coconut Bounty",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Noix de coco · Chocolat blanc",
+    description: "Coeur fondant à la noix de coco, parsemé de coco toastée et enveloppé de chocolat blanc riche."
+  },
+  {
+    slug: "lemon",
+    name: "Lemon",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Citron · Chocolat blanc",
+    description: "Fourrée de fondant citron et enrobée de chocolat blanc riche."
+  },
+  {
+    slug: "praline-pistache",
+    name: "Praliné Pistache",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Pistache · Amande · Chocolat blanc",
+    description: "Fourrée de pistache concassée sur une pâte d'amande pistache, enrobée de chocolat blanc riche."
+  },
+  {
+    slug: "passion-berry",
+    name: "Passion Berry",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Framboise · Chocolat blanc",
+    description: "Fourrée de coulis à la framboise, enrobée de chocolat blanc riche."
+  },
+  {
+    slug: "pistache-supreme",
+    name: "Pistache Suprême",
+    category: "chocolate",
+    categoryLabel: "Les chocolatés",
+    image: TEMP_DATE_IMAGE,
+    notes: "Crème pistache · Chocolat blanc",
+    description: "Crème pistache 100% pure, enrobée de chocolat blanc riche."
   }
 ];
 
 export const classicFlavors: Flavor[] = [
   {
-    name: "Praliné Amande",
+    slug: "corne-de-gazelle",
+    name: "Corne de gazelle",
     category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Amande · Chocolat au lait",
-    description: "Une ganache douce et fondante, relevée par le croquant délicat de l'amande torréfiée."
-  },
-  {
-    name: "Pâte d'amande à la fleur d'oranger",
-    category: "classic",
+    categoryLabel: "Les classiques",
     image: TEMP_DATE_IMAGE,
     notes: "Amande · Fleur d'oranger",
-    description: "Une recette parfumée et raffinée, inspirée des douceurs marocaines les plus délicates."
+    description: "Délicat et parfumé : pâte d'amande à la fleur d'oranger et éclats de fruits secs."
   },
   {
-    name: "Praliné Noisette",
+    slug: "pistache-fleurie",
+    name: "Pistache fleurie",
     category: "classic",
+    categoryLabel: "Les classiques",
     image: TEMP_DATE_IMAGE,
-    notes: "Noisette · Praliné",
-    description: "Un coeur soyeux aux noisettes, généreux en bouche et subtilement caramélisé."
+    notes: "Amande pistache · Touche florale",
+    description: "Chic et raffiné : pâte d'amande à la pistache, éclats de pistache et touche florale."
   },
   {
-    name: "Praliné Gianduja",
+    slug: "orient-orange",
+    name: "Orient d'orange",
     category: "classic",
+    categoryLabel: "Les classiques",
     image: TEMP_DATE_IMAGE,
-    modelPath: CHOCOLATE_DATE_MODEL_PATH,
-    notes: "Gianduja · Chocolat noir",
-    description: "Une alliance intense entre chocolat profond et praliné velouté pour une datte très gourmande."
-  },
-  {
-    name: "Noix",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Noix · Miel léger",
-    description: "Une saveur élégante et authentique, avec une noix croquante qui souligne la douceur de la datte."
-  },
-  {
-    name: "Pistache",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Pistache · Crème fine",
-    description: "Une crème de pistache noble, ronde et parfumée, pour une bouchée très précieuse."
-  },
-  {
-    name: "Acajou",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Noix de cajou · Praliné",
-    description: "Une garniture onctueuse à la noix de cajou, douce, beurrée et parfaitement équilibrée."
-  },
-  {
-    name: "Nougatine Amande",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Amande · Nougatine",
-    description: "Une touche croustillante et dorée qui apporte du relief à la tendresse naturelle de la datte."
-  },
-  {
-    name: "Noix de coco façon Bounty",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Coco · Chocolat",
-    description: "Une douceur coco généreuse, enveloppante et régressive, travaillée dans un esprit premium."
-  },
-  {
-    name: "Cacahuète façon Snickers",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Cacahuète · Caramel",
-    description: "Un contraste gourmand entre cacahuète, caramel et datte moelleuse, sans lourdeur."
-  },
-  {
-    name: "Crunchy speculos",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Speculos · Épices douces",
-    description: "Une bouchée croustillante aux notes biscuitées, chaleureuse et parfaitement addictive."
-  },
-  {
-    name: "Selou au caramel beurre salé",
-    category: "classic",
-    image: TEMP_DATE_IMAGE,
-    notes: "Selou · Caramel salé",
-    description: "Un hommage marocain au selou, adouci par un caramel beurre salé fin et fondant."
+    notes: "Amande · Orange confite · Noix",
+    description: "Gourmand et fruité. Pâte d'amandes aux oranges, parée de noix croquantes et orange confite."
   }
 ];
 
-export const exoticFlavors: Flavor[] = [
+export const sushiFlavors: Flavor[] = [
   {
-    name: "Pâte à la Framboise",
-    category: "exotic",
+    slug: "cacao-moka",
+    name: "Cacao Moka",
+    category: "sushi",
+    categoryLabel: "Les sushi dattes",
     image: TEMP_DATE_IMAGE,
-    notes: "Framboise · Acidulé",
-    description: "Une pâte fruitée vive et élégante, pensée pour réveiller la richesse de la datte."
+    notes: "Café · Chocolat noir · Cacao",
+    description: "Crème café sublimée par une touche de chocolat noir et fine poudre de cacao."
   },
   {
-    name: "Pâte à la Mangue",
-    category: "exotic",
+    slug: "praline-amande-sushi",
+    name: "Praliné amande",
+    category: "sushi",
+    categoryLabel: "Les sushi dattes",
     image: TEMP_DATE_IMAGE,
-    notes: "Mangue · Soleil",
-    description: "Une note tropicale ronde et parfumée, tout en douceur, comme un rayon de soleil."
+    notes: "Praliné amande · Chocolat",
+    description: "Crème praliné amande, surmontée d'une touche de chocolat et d'amandes concassées."
   },
   {
-    name: "Crème citron",
-    category: "exotic",
+    slug: "pistachio",
+    name: "Pistachio",
+    category: "sushi",
+    categoryLabel: "Les sushi dattes",
     image: TEMP_DATE_IMAGE,
-    notes: "Citron · Crème légère",
-    description: "Une crème citronnée fraîche et soyeuse, idéale pour une fin de dégustation lumineuse."
+    notes: "Pistache · Chocolat blanc",
+    description: "Crème pistache pure, décorée de chocolat blanc et d'éclats de pistache."
+  },
+  {
+    slug: "speculos",
+    name: "Speculos",
+    category: "sushi",
+    categoryLabel: "Les sushi dattes",
+    image: TEMP_DATE_IMAGE,
+    notes: "Speculos crunchy · Biscuit",
+    description: "Crème spéculoos crunchy, avec une touche de biscuit spéculoos émietté."
+  },
+  {
+    slug: "caramel",
+    name: "Caramel",
+    category: "sushi",
+    categoryLabel: "Les sushi dattes",
+    image: TEMP_DATE_IMAGE,
+    notes: "Caramel · Chocolat · Feuilletine",
+    description: "Crème caramel nappée de chocolat et de feuilletine croustillante."
+  },
+  {
+    slug: "framboise",
+    name: "Framboise",
+    category: "sushi",
+    categoryLabel: "Les sushi dattes",
+    image: TEMP_DATE_IMAGE,
+    notes: "Framboise · Chocolat blanc",
+    description: "Crème framboise nappée de chocolat blanc et d'éclats de framboise séchée."
   }
 ];
 
-export const allFlavors = [...classicFlavors, ...exoticFlavors];
+export const flavorGroups = [
+  {
+    id: "chocolate",
+    label: "Les chocolatés",
+    description: "Dattes Majhoul fourrées et enrobées de chocolat.",
+    flavors: chocolateFlavors
+  },
+  {
+    id: "classic",
+    label: "Les classiques",
+    description: "Dattes Majhoul fourrées aux inspirations marocaines.",
+    flavors: classicFlavors
+  },
+  {
+    id: "sushi",
+    label: "Les sushi dattes",
+    description: "Dattes garnies façon bouchées pâtissières.",
+    flavors: sushiFlavors
+  }
+] as const;
+
+export const exoticFlavors: Flavor[] = [];
+export const allFlavors = [...chocolateFlavors, ...classicFlavors, ...sushiFlavors];
 
 export const paymentMethods = [
   {

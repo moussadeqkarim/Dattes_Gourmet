@@ -33,7 +33,7 @@ export function FlavorsSection() {
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featuredFlavors.map((flavor) => (
             <article
-              key={flavor.name}
+              key={flavor.slug}
               className="luxury-border group overflow-hidden rounded-[1.5rem] bg-cream shadow-soft transition duration-300 hover:-translate-y-1"
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-white">

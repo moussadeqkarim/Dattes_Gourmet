@@ -11,12 +11,13 @@ export function FlavorCarousel() {
   const [index, setIndex] = useState(0);
   const activeFlavor = allFlavors[index];
 
-  const categoryLabel = activeFlavor.category === "classic" ? "Saveur classique" : "Saveur exotique";
+  const categoryLabel = activeFlavor.categoryLabel;
 
   const visibleDots = useMemo(
     () =>
       allFlavors.map((flavor, dotIndex) => ({
         label: flavor.name,
+        slug: flavor.slug,
         isActive: dotIndex === index
       })),
     [index]
@@ -50,7 +51,7 @@ export function FlavorCarousel() {
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${activeFlavor.name}-image`}
+              key={`${activeFlavor.slug}-image`}
               initial={{ opacity: 0, x: -28 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 28 }}
@@ -64,7 +65,7 @@ export function FlavorCarousel() {
 
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${activeFlavor.name}-copy`}
+              key={`${activeFlavor.slug}-copy`}
               initial={{ opacity: 0, y: 22 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -22 }}
@@ -97,7 +98,7 @@ export function FlavorCarousel() {
         <div className="mx-auto mt-8 flex max-w-4xl flex-wrap justify-center gap-2 pb-14">
           {visibleDots.map((dot, dotIndex) => (
             <button
-              key={dot.label}
+              key={dot.slug}
               type="button"
               onClick={() => setIndex(dotIndex)}
               className={cn(

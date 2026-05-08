@@ -7,11 +7,13 @@ export type BoxOption = {
   description: string;
 };
 
-export type FlavorCategory = "classic" | "exotic";
+export type FlavorCategory = "chocolate" | "classic" | "sushi";
 
 export type Flavor = {
+  slug: string;
   name: string;
   category: FlavorCategory;
+  categoryLabel: string;
   image: string;
   modelPath?: string;
   notes?: string;
