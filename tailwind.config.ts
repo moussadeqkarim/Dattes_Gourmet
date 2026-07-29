@@ -9,16 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        dark: "#1A0B0E",
-        chocolate: "#261317",
-        date: "#5A2634",
-        plum: "#3A2228",
-        rose: "#9B5A6B",
-        mauve: "#B77A88",
-        gold: "#C8BAA5",
-        cream: "#EFE6DA",
-        beige: "#F6EEE5",
-        taupe: "#6F6258"
+        dark: "#16090C",
+        chocolate: "#2A1017",
+        date: "#5E1F2E",
+        plum: "#3F1722",
+        rose: "#8F4655",
+        mauve: "#C58D82",
+        gold: "#D4BD91",
+        cream: "#F3EADF",
+        beige: "#FBF6F0",
+        taupe: "#74655B"
       },
       fontFamily: {
         heading: ["var(--font-playfair)", "Georgia", "serif"],
@@ -29,7 +29,7 @@ const config: Config = {
         soft: "0 14px 34px rgba(38, 19, 23, 0.10)"
       },
       backgroundImage: {
-        "gold-line": "linear-gradient(90deg, transparent, rgba(200,186,165,.78), transparent)"
+        "gold-line": "linear-gradient(90deg, transparent, rgba(212,189,145,.82), transparent)"
       }
     }
   },

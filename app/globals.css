@@ -4,16 +4,16 @@
 
 :root {
   color-scheme: light;
-  --dark: #1a0b0e;
-  --chocolate: #261317;
-  --date: #5a2634;
-  --plum: #3a2228;
-  --rose: #9b5a6b;
-  --mauve: #b77a88;
-  --gold: #c8baa5;
-  --cream: #efe6da;
-  --beige: #f6eee5;
-  --taupe: #6f6258;
+  --dark: #16090c;
+  --chocolate: #2a1017;
+  --date: #5e1f2e;
+  --plum: #3f1722;
+  --rose: #8f4655;
+  --mauve: #c58d82;
+  --gold: #d4bd91;
+  --cream: #f3eadf;
+  --beige: #fbf6f0;
+  --taupe: #74655b;
 }
 
 * {
@@ -21,15 +21,15 @@
 }
 
 html {
+  position: relative;
   scroll-behavior: smooth;
 }
 
 body {
   min-height: 100vh;
   background:
-    radial-gradient(circle at 20% 8%, rgba(183, 122, 136, 0.18), transparent 28rem),
-    radial-gradient(circle at 88% 18%, rgba(200, 186, 165, 0.22), transparent 24rem),
-    linear-gradient(180deg, #efe6da 0%, #f6eee5 46%, #efe6da 100%);
+    linear-gradient(120deg, rgba(94, 31, 46, 0.045) 0%, transparent 28%, transparent 72%, rgba(212, 189, 145, 0.08) 100%),
+    linear-gradient(180deg, #f3eadf 0%, #fbf6f0 48%, #f3eadf 100%);
   color: var(--chocolate);
 }
 
@@ -42,7 +42,7 @@ textarea {
 }
 
 ::selection {
-  background: rgba(155, 90, 107, 0.28);
+  background: rgba(94, 31, 46, 0.24);
 }
 
 .text-balance {
@@ -50,7 +50,7 @@ textarea {
 }
 
 .luxury-border {
-  border: 1px solid rgba(90, 38, 52, 0.18);
+  border: 1px solid rgba(94, 31, 46, 0.18);
 }
 
 .hero-mask {
@@ -58,5 +58,5 @@ textarea {
 }
 
 .focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-rose focus:ring-offset-2 focus:ring-offset-cream;
+  @apply focus:outline-none focus:ring-2 focus:ring-date focus:ring-offset-2 focus:ring-offset-cream;
 }

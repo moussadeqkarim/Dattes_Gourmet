@@ -7,7 +7,7 @@ import { BRAND_NAME, BRAND_TAGLINE } from "@/lib/catalog";
 export function Hero() {
   return (
     <section className="relative min-h-[86vh] overflow-hidden bg-date pt-20 text-cream">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(200,186,165,0.24),transparent_22rem),radial-gradient(circle_at_16%_72%,rgba(183,122,136,0.18),transparent_20rem),linear-gradient(135deg,#5A2634_0%,#3A2228_52%,#1A0B0E_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(112deg,rgba(212,189,145,0.16)_0%,transparent_31%),linear-gradient(135deg,#5E1F2E_0%,#3F1722_52%,#16090C_100%)]" />
       <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-cream to-transparent" />
       <div className="relative z-10 mx-auto flex min-h-[calc(86vh-5rem)] max-w-7xl items-center px-5 py-20 sm:px-8">
         <motion.div

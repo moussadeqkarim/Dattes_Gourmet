@@ -6,6 +6,7 @@ import { FlavorMarquee } from "@/components/home/flavor-marquee";
 import { FlavorsSection } from "@/components/home/flavors-section";
 import { Hero } from "@/components/home/hero";
 import { MenuSection } from "@/components/home/menu-section";
+import { SignatureScrollStory } from "@/components/home/signature-scroll-story";
 import { TEMP_DATE_IMAGE } from "@/lib/catalog";
 
 export default function HomePage() {
@@ -45,6 +46,7 @@ export default function HomePage() {
           </div>
         </div>
       </AnimatedSection>
+      <SignatureScrollStory />
       <MenuSection />
       <FlavorsSection />
     </main>

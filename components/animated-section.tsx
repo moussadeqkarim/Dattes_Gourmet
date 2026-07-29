@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, type HTMLMotionProps } from "framer-motion";
+import { motion, useReducedMotion, type HTMLMotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type AnimatedSectionProps = HTMLMotionProps<"section"> & {
@@ -8,12 +8,18 @@ type AnimatedSectionProps = HTMLMotionProps<"section"> & {
 };
 
 export function AnimatedSection({ children, className, ...props }: AnimatedSectionProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.section
-      initial={{ opacity: 0, y: 36 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={
+        shouldReduceMotion
+          ? { opacity: 1 }
+          : { opacity: 0, y: 40, scale: 0.99, filter: "blur(8px)" }
+      }
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-120px" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
       className={cn(className)}
       {...props}
     >
