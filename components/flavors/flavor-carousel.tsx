@@ -1,10 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { allFlavors, DATE_MODEL_PATH } from "@/lib/catalog";
-import { DateModelViewer } from "@/components/flavors/date-model-viewer";
+import {
+  DateModelViewer,
+  preloadDateModel
+} from "@/components/flavors/date-model-viewer";
 import { cn } from "@/lib/utils";
 
 export function FlavorCarousel() {
@@ -22,6 +25,40 @@ export function FlavorCarousel() {
       })),
     [index]
   );
+
+  const preloadFlavor = useCallback((targetIndex: number) => {
+    const flavor = allFlavors[targetIndex];
+    void preloadDateModel(flavor.modelPath ?? DATE_MODEL_PATH);
+  }, []);
+
+  const preloadNextWhenIdle = useCallback(() => {
+    const connection = (
+      navigator as Navigator & {
+        connection?: { effectiveType?: string; saveData?: boolean };
+      }
+    ).connection;
+
+    if (connection?.saveData || connection?.effectiveType === "2g" || connection?.effectiveType === "slow-2g") {
+      return;
+    }
+
+    const nextIndex = (index + 1) % allFlavors.length;
+
+    const requestIdle = (
+      window as Window & {
+        requestIdleCallback?: (
+          callback: IdleRequestCallback,
+          options?: IdleRequestOptions
+        ) => number;
+      }
+    ).requestIdleCallback;
+
+    if (requestIdle) {
+      requestIdle(() => preloadFlavor(nextIndex), { timeout: 1800 });
+    } else {
+      globalThis.setTimeout(() => preloadFlavor(nextIndex), 900);
+    }
+  }, [index, preloadFlavor]);
 
   function goToNext() {
     setIndex((current) => (current + 1) % allFlavors.length);
@@ -43,25 +80,28 @@ export function FlavorCarousel() {
           <button
             type="button"
             onClick={goToPrevious}
-            className="focus-ring absolute left-0 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-date text-cream shadow-soft transition hover:bg-chocolate md:-left-3"
+            onPointerEnter={() => preloadFlavor((index - 1 + allFlavors.length) % allFlavors.length)}
+            onFocus={() => preloadFlavor((index - 1 + allFlavors.length) % allFlavors.length)}
+            className="focus-ring absolute left-0 top-[25%] z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-date text-cream shadow-soft transition hover:bg-chocolate md:-left-3 md:top-1/2"
             aria-label="Saveur précédente"
           >
             <ChevronLeft size={25} />
           </button>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${activeFlavor.slug}-image`}
-              initial={{ opacity: 0, x: -28 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 28 }}
-              transition={{ duration: 0.38 }}
-              className="relative mx-auto aspect-[1.15/1] w-full max-w-xl [perspective:1200px]"
-            >
-              <div className="absolute inset-x-8 bottom-10 h-12 rounded-full bg-chocolate/20 blur-2xl" />
-              <DateModelViewer modelPath={activeFlavor.modelPath ?? DATE_MODEL_PATH} />
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0, x: -28 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.38 }}
+            className="relative mx-auto aspect-[1.15/1] w-full max-w-xl [perspective:1200px]"
+          >
+            <div className="absolute inset-x-8 bottom-10 h-12 rounded-full bg-chocolate/20 blur-2xl" />
+            <DateModelViewer
+              modelPath={activeFlavor.modelPath ?? DATE_MODEL_PATH}
+              posterPath={activeFlavor.image}
+              flavorName={activeFlavor.name}
+              onModelReady={preloadNextWhenIdle}
+            />
+          </motion.div>
 
           <AnimatePresence mode="wait">
             <motion.div
@@ -88,7 +128,9 @@ export function FlavorCarousel() {
           <button
             type="button"
             onClick={goToNext}
-            className="focus-ring absolute right-0 top-1/2 z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-date text-cream shadow-soft transition hover:bg-chocolate md:-right-3"
+            onPointerEnter={() => preloadFlavor((index + 1) % allFlavors.length)}
+            onFocus={() => preloadFlavor((index + 1) % allFlavors.length)}
+            className="focus-ring absolute right-0 top-[25%] z-10 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-date text-cream shadow-soft transition hover:bg-chocolate md:-right-3 md:top-1/2"
             aria-label="Saveur suivante"
           >
             <ChevronRight size={25} />
@@ -101,6 +143,8 @@ export function FlavorCarousel() {
               key={dot.slug}
               type="button"
               onClick={() => setIndex(dotIndex)}
+              onPointerEnter={() => preloadFlavor(dotIndex)}
+              onFocus={() => preloadFlavor(dotIndex)}
               className={cn(
                 "h-2.5 rounded-full transition",
                 dot.isActive ? "w-10 bg-date" : "w-2.5 bg-date/28 hover:bg-date/50"

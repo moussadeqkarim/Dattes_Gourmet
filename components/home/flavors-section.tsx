@@ -49,13 +49,15 @@ export function FlavorsSection() {
                     key={flavor.slug}
                     className="luxury-border group overflow-hidden rounded-[1.5rem] bg-cream shadow-soft transition duration-300 hover:-translate-y-1"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-[#f3dfd0]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#ead6c8]">
                       <Image
                         src={flavor.image}
                         alt={flavor.name}
                         fill
                         sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-contain p-4 transition duration-500 group-hover:scale-105"
+                        className={`object-cover transition duration-500 group-hover:scale-[1.03] ${
+                          flavor.slug === "praline-pistache" ? "mix-blend-multiply" : ""
+                        }`}
                       />
                     </div>
                     <div className="p-5">

@@ -11,7 +11,7 @@ export function SignatureScrollStory() {
     offset: ["start start", "end end"]
   });
 
-  const titleY = useTransform(scrollYProgress, [0, 0.35, 1], [72, 0, -54]);
+  const contentY = useTransform(scrollYProgress, [0, 0.35, 1], [48, 0, -36]);
   const titleOpacity = useTransform(scrollYProgress, [0, 0.18, 0.8, 1], [0, 1, 1, 0.45]);
   const accentX = useTransform(scrollYProgress, [0, 1], ["-45%", "145%"]);
   const progressScale = useTransform(scrollYProgress, [0.05, 0.95], [0, 1]);
@@ -27,24 +27,21 @@ export function SignatureScrollStory() {
           style={{ x: shouldReduceMotion ? "120%" : accentX }}
         />
 
-        <div className="relative mx-auto w-full max-w-7xl">
-          <motion.p
-            className="mb-7 text-xs font-semibold uppercase tracking-[0.32em] text-gold sm:text-sm"
-            style={{ opacity: shouldReduceMotion ? 1 : titleOpacity }}
-          >
+        <motion.div
+          className="relative mx-auto w-full max-w-7xl"
+          style={{
+            y: shouldReduceMotion ? 0 : contentY,
+            opacity: shouldReduceMotion ? 1 : titleOpacity
+          }}
+        >
+          <p className="mb-7 text-xs font-semibold uppercase tracking-[0.32em] text-gold sm:text-sm">
             Le geste signature
-          </motion.p>
+          </p>
 
-          <motion.h2
-            className="max-w-5xl text-balance font-heading text-5xl leading-[1.02] sm:text-7xl lg:text-8xl"
-            style={{
-              y: shouldReduceMotion ? 0 : titleY,
-              opacity: shouldReduceMotion ? 1 : titleOpacity
-            }}
-          >
+          <h2 className="max-w-5xl text-balance font-heading text-5xl leading-[1.02] sm:text-7xl lg:text-8xl">
             De la datte
             <span className="block text-gold">au bijou gourmand.</span>
-          </motion.h2>
+          </h2>
 
           <p className="mt-8 max-w-2xl text-base leading-8 text-cream/75 sm:text-lg">
             Chaque création est garnie, enrobée et finie à la main pour offrir un instant aussi
@@ -57,7 +54,7 @@ export function SignatureScrollStory() {
               style={{ scaleX: shouldReduceMotion ? 1 : progressScale }}
             />
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
