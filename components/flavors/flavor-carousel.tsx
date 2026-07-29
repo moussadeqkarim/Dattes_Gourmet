@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { allFlavors, DATE_MODEL_PATH } from "@/lib/catalog";
 import {
@@ -31,7 +31,7 @@ export function FlavorCarousel() {
     void preloadDateModel(flavor.modelPath ?? DATE_MODEL_PATH);
   }, []);
 
-  const preloadNextWhenIdle = useCallback(() => {
+  const preloadNeighborsWhenIdle = useCallback(() => {
     const connection = (
       navigator as Navigator & {
         connection?: { effectiveType?: string; saveData?: boolean };
@@ -43,6 +43,7 @@ export function FlavorCarousel() {
     }
 
     const nextIndex = (index + 1) % allFlavors.length;
+    const previousIndex = (index - 1 + allFlavors.length) % allFlavors.length;
 
     const requestIdle = (
       window as Window & {
@@ -54,9 +55,15 @@ export function FlavorCarousel() {
     ).requestIdleCallback;
 
     if (requestIdle) {
-      requestIdle(() => preloadFlavor(nextIndex), { timeout: 1800 });
+      requestIdle(() => {
+        preloadFlavor(nextIndex);
+        preloadFlavor(previousIndex);
+      }, { timeout: 1800 });
     } else {
-      globalThis.setTimeout(() => preloadFlavor(nextIndex), 900);
+      globalThis.setTimeout(() => {
+        preloadFlavor(nextIndex);
+        preloadFlavor(previousIndex);
+      }, 900);
     }
   }, [index, preloadFlavor]);
 
@@ -97,33 +104,29 @@ export function FlavorCarousel() {
             <div className="absolute inset-x-8 bottom-10 h-12 rounded-full bg-chocolate/20 blur-2xl" />
             <DateModelViewer
               modelPath={activeFlavor.modelPath ?? DATE_MODEL_PATH}
-              posterPath={activeFlavor.image}
               flavorName={activeFlavor.name}
-              onModelReady={preloadNextWhenIdle}
+              onModelReady={preloadNeighborsWhenIdle}
             />
           </motion.div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`${activeFlavor.slug}-copy`}
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -22 }}
-              transition={{ duration: 0.38 }}
-              className="mx-auto max-w-3xl pr-0 md:pr-14"
-            >
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-gold">{categoryLabel}</p>
-              <h2 className="mt-5 font-heading text-5xl leading-tight text-date sm:text-7xl">
-                {activeFlavor.name}
-              </h2>
-              <p className="mt-7 text-2xl font-bold italic leading-tight text-date sm:text-4xl">
-                {activeFlavor.notes}
-              </p>
-              <p className="mt-7 text-xl italic leading-9 text-date/90 sm:text-3xl sm:leading-[1.35]">
-                {activeFlavor.description}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            key={`${activeFlavor.slug}-copy`}
+            initial={{ opacity: 0, x: 14 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            className="mx-auto max-w-3xl pr-0 md:pr-14"
+          >
+            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-gold">{categoryLabel}</p>
+            <h2 className="mt-5 font-heading text-5xl leading-tight text-date sm:text-7xl">
+              {activeFlavor.name}
+            </h2>
+            <p className="mt-7 text-2xl font-bold italic leading-tight text-date sm:text-4xl">
+              {activeFlavor.notes}
+            </p>
+            <p className="mt-7 text-xl italic leading-9 text-date/90 sm:text-3xl sm:leading-[1.35]">
+              {activeFlavor.description}
+            </p>
+          </motion.div>
 
           <button
             type="button"

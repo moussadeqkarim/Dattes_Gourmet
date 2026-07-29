@@ -4,6 +4,31 @@ import { ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/animated-section";
 import { flavorGroups } from "@/lib/catalog";
 
+const productScales: Record<string, number> = {
+  "selou-caramel": 0.94,
+  "crunchy-gianduja": 1,
+  "praline-amande-chocolate": 0.97,
+  kinder: 0.98,
+  "eclat-orange": 1.1,
+  "rocher-snickers": 1.03,
+  "arabica-cafe": 1.05,
+  "lotus-speculos": 1.06,
+  "coconut-bounty": 1.05,
+  lemon: 1.08,
+  "praline-pistache": 0.76,
+  "passion-berry": 1.06,
+  "pistache-supreme": 1.02,
+  "corne-de-gazelle": 0.97,
+  "pistache-fleurie": 0.94,
+  "orient-orange": 0.84,
+  "cacao-moka": 1.05,
+  "praline-amande-sushi": 0.97,
+  pistachio: 0.87,
+  speculos: 0.87,
+  caramel: 0.9,
+  framboise: 0.93
+};
+
 export function FlavorsSection() {
   return (
     <AnimatedSection id="saveurs" className="bg-beige/70 px-5 py-24 sm:px-8">
@@ -50,15 +75,20 @@ export function FlavorsSection() {
                     className="luxury-border group overflow-hidden rounded-[1.5rem] bg-cream shadow-soft transition duration-300 hover:-translate-y-1"
                   >
                     <div className="relative aspect-[4/3] overflow-hidden bg-[#ead6c8]">
-                      <Image
-                        src={flavor.image}
-                        alt={flavor.name}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className={`object-cover transition duration-500 group-hover:scale-[1.03] ${
-                          flavor.slug === "praline-pistache" ? "mix-blend-multiply" : ""
-                        }`}
-                      />
+                      <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.025]">
+                        <div
+                          className="relative h-full w-full"
+                          style={{ transform: `scale(${productScales[flavor.slug] ?? 1})` }}
+                        >
+                          <Image
+                            src={flavor.image}
+                            alt={flavor.name}
+                            fill
+                            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                            className="object-contain mix-blend-multiply"
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div className="p-5">
                       <p className="font-heading text-xl leading-7 text-chocolate">{flavor.name}</p>

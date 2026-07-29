@@ -1,9 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type {
   Group,
+  Material,
+  Mesh,
   Object3D,
   PerspectiveCamera,
   Scene,
@@ -12,9 +13,28 @@ import type {
 
 type DateModelViewerProps = {
   modelPath: string;
-  posterPath: string;
   flavorName: string;
   onModelReady?: () => void;
+};
+
+type MaterialState = {
+  material: Material;
+  opacity: number;
+  transparent: boolean;
+  depthWrite: boolean;
+};
+
+type ModelInstance = {
+  object: Object3D;
+  materials: MaterialState[];
+  baseScale: number;
+};
+
+type ModelTransition = {
+  from: ModelInstance | null;
+  to: ModelInstance;
+  startedAt: number;
+  duration: number;
 };
 
 type ViewerRuntime = {
@@ -23,6 +43,8 @@ type ViewerRuntime = {
   camera: PerspectiveCamera;
   renderer: WebGLRenderer;
   dateGroup: Group;
+  currentModel: ModelInstance | null;
+  transition: ModelTransition | null;
 };
 
 const modelCache = new Map<string, Promise<Object3D>>();
@@ -56,13 +78,93 @@ export async function preloadDateModel(modelPath: string) {
   try {
     await loadModelTemplate(modelPath);
   } catch {
-    // A foreground load will retry and show the matching poster if preloading fails.
+    // A foreground load will retry if a background preload fails.
   }
+}
+
+function setModelOpacity(instance: ModelInstance, opacity: number, transitioning: boolean) {
+  for (const state of instance.materials) {
+    const shouldBeTransparent = transitioning || state.transparent || opacity < 0.999;
+
+    state.material.opacity = state.opacity * opacity;
+    state.material.depthWrite = transitioning ? false : state.depthWrite;
+
+    if (state.material.transparent !== shouldBeTransparent) {
+      state.material.transparent = shouldBeTransparent;
+      state.material.needsUpdate = true;
+    }
+  }
+}
+
+function disposeModelInstance(instance: ModelInstance) {
+  for (const state of instance.materials) {
+    state.material.dispose();
+  }
+}
+
+function completeTransition(runtime: ViewerRuntime) {
+  const transition = runtime.transition;
+
+  if (!transition) {
+    return;
+  }
+
+  setModelOpacity(transition.to, 1, false);
+  transition.to.object.scale.setScalar(transition.to.baseScale);
+
+  if (transition.from) {
+    runtime.dateGroup.remove(transition.from.object);
+    disposeModelInstance(transition.from);
+  }
+
+  runtime.currentModel = transition.to;
+  runtime.transition = null;
+}
+
+function createModelInstance(runtime: ViewerRuntime, template: Object3D) {
+  const model = template.clone(true);
+  const materials: MaterialState[] = [];
+
+  model.traverse((child) => {
+    const mesh = child as Mesh;
+
+    if (!mesh.isMesh) {
+      return;
+    }
+
+    const sourceMaterials = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+    const clonedMaterials = sourceMaterials.map((material) => material.clone());
+
+    mesh.material = Array.isArray(mesh.material) ? clonedMaterials : clonedMaterials[0];
+
+    for (const material of clonedMaterials) {
+      materials.push({
+        material,
+        opacity: material.opacity,
+        transparent: material.transparent,
+        depthWrite: material.depthWrite
+      });
+    }
+  });
+
+  const bounds = new runtime.THREE.Box3().setFromObject(model);
+  const center = bounds.getCenter(new runtime.THREE.Vector3());
+  const size = bounds.getSize(new runtime.THREE.Vector3());
+  const largestSide = Math.max(size.x, size.y, size.z) || 1;
+  const baseScale = 2.55 / largestSide;
+
+  model.position.sub(center);
+  model.scale.setScalar(baseScale * 0.96);
+  model.rotation.set(-0.08, -0.35, 0.05);
+
+  const instance = { object: model, materials, baseScale };
+  setModelOpacity(instance, 0, true);
+
+  return instance;
 }
 
 export function DateModelViewer({
   modelPath,
-  posterPath,
   flavorName,
   onModelReady
 }: DateModelViewerProps) {
@@ -71,7 +173,8 @@ export function DateModelViewer({
   const isVisibleRef = useRef(true);
   const onModelReadyRef = useRef(onModelReady);
   const [isViewerReady, setIsViewerReady] = useState(false);
-  const [isModelReady, setIsModelReady] = useState(false);
+  const [hasModel, setHasModel] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -125,7 +228,15 @@ export function DateModelViewer({
         rimLight.position.set(-2.4, 2.8, -4.6);
         scene.add(ambient, keyLight, fillLight, rimLight);
 
-        runtimeRef.current = { THREE, scene, camera, renderer, dateGroup };
+        runtimeRef.current = {
+          THREE,
+          scene,
+          camera,
+          renderer,
+          dateGroup,
+          currentModel: null,
+          transition: null
+        };
 
         const container = canvas.parentElement ?? canvas;
 
@@ -160,6 +271,30 @@ export function DateModelViewer({
             return;
           }
 
+          const runtime = runtimeRef.current;
+          const transition = runtime?.transition;
+
+          if (runtime && transition) {
+            const progress = Math.min(1, (now - transition.startedAt) / transition.duration);
+            const easedProgress = 1 - Math.pow(1 - progress, 3);
+
+            if (transition.from) {
+              setModelOpacity(transition.from, 1 - easedProgress, true);
+              transition.from.object.scale.setScalar(
+                transition.from.baseScale * (1 + easedProgress * 0.025)
+              );
+            }
+
+            setModelOpacity(transition.to, easedProgress, true);
+            transition.to.object.scale.setScalar(
+              transition.to.baseScale * (0.96 + easedProgress * 0.04)
+            );
+
+            if (progress >= 1) {
+              completeTransition(runtime);
+            }
+          }
+
           if (!reduceMotion) {
             dateGroup.rotation.y += 0.008;
             dateGroup.rotation.x = Math.sin(now * 0.00065) * 0.035;
@@ -172,6 +307,7 @@ export function DateModelViewer({
         setIsViewerReady(true);
       } catch {
         if (isMounted) {
+          setIsLoading(false);
           setHasError(true);
         }
       }
@@ -184,7 +320,29 @@ export function DateModelViewer({
       window.cancelAnimationFrame(frameId);
       resizeObserver?.disconnect();
       visibilityObserver?.disconnect();
-      runtimeRef.current?.renderer.dispose();
+
+      const runtime = runtimeRef.current;
+
+      if (runtime) {
+        const instances = new Set<ModelInstance>();
+
+        if (runtime.currentModel) {
+          instances.add(runtime.currentModel);
+        }
+
+        if (runtime.transition?.from) {
+          instances.add(runtime.transition.from);
+        }
+
+        if (runtime.transition?.to) {
+          instances.add(runtime.transition.to);
+        }
+
+        instances.forEach(disposeModelInstance);
+        runtime.dateGroup.clear();
+        runtime.renderer.dispose();
+      }
+
       runtimeRef.current = null;
     };
   }, []);
@@ -198,7 +356,7 @@ export function DateModelViewer({
 
     const activeRuntime = runtime;
     let isCurrentRequest = true;
-    setIsModelReady(false);
+    setIsLoading(true);
     setHasError(false);
 
     async function showModel() {
@@ -209,27 +367,36 @@ export function DateModelViewer({
           return;
         }
 
-        const model = template.clone(true);
-        const bounds = new activeRuntime.THREE.Box3().setFromObject(model);
-        const center = bounds.getCenter(new activeRuntime.THREE.Vector3());
-        const size = bounds.getSize(new activeRuntime.THREE.Vector3());
-        const largestSide = Math.max(size.x, size.y, size.z) || 1;
-        const scale = 2.55 / largestSide;
+        completeTransition(activeRuntime);
 
-        model.position.sub(center);
-        model.scale.setScalar(scale);
-        model.rotation.set(-0.08, -0.35, 0.05);
+        const previousModel = activeRuntime.currentModel;
+        const incomingModel = createModelInstance(activeRuntime, template);
 
-        activeRuntime.dateGroup.clear();
-        activeRuntime.dateGroup.rotation.set(0, 0, 0);
-        activeRuntime.dateGroup.add(model);
-        activeRuntime.renderer.render(activeRuntime.scene, activeRuntime.camera);
+        if (!previousModel) {
+          activeRuntime.dateGroup.rotation.set(0, 0, 0);
+        } else {
+          setModelOpacity(previousModel, 1, true);
+        }
 
-        setIsModelReady(true);
+        activeRuntime.dateGroup.add(incomingModel.object);
+        activeRuntime.transition = {
+          from: previousModel,
+          to: incomingModel,
+          startedAt: performance.now(),
+          duration: previousModel ? 340 : 420
+        };
+
+        setHasModel(true);
+        setIsLoading(false);
         onModelReadyRef.current?.();
       } catch {
         if (isCurrentRequest) {
-          setHasError(true);
+          const hasVisibleModel = Boolean(
+            activeRuntime.currentModel || activeRuntime.transition
+          );
+
+          setIsLoading(false);
+          setHasError(!hasVisibleModel);
         }
       }
     }
@@ -242,33 +409,17 @@ export function DateModelViewer({
   }, [isViewerReady, modelPath]);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[2rem]">
-      <div
-        className={`absolute inset-0 transition-opacity duration-500 ${
-          isModelReady ? "pointer-events-none opacity-0" : "opacity-100"
-        }`}
-      >
-        <Image
-          key={posterPath}
-          src={posterPath}
-          alt={flavorName}
-          fill
-          priority
-          sizes="(min-width: 768px) 46vw, 100vw"
-          className="object-cover"
-        />
-      </div>
-
+    <div className="relative h-full w-full" aria-busy={isLoading}>
       <canvas
         ref={canvasRef}
-        className={`absolute inset-0 h-full w-full transition-opacity duration-500 ${
-          isModelReady ? "opacity-100" : "opacity-0"
+        className={`absolute inset-0 h-full w-full transition-opacity duration-300 ${
+          hasModel ? "opacity-100" : "opacity-0"
         }`}
         aria-label={`Modèle 3D de ${flavorName} en rotation`}
       />
 
-      {!isModelReady && !hasError ? (
-        <div className="pointer-events-none absolute bottom-5 left-1/2 -translate-x-1/2">
+      {!hasModel && isLoading ? (
+        <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <span className="block size-7 animate-spin rounded-full border-2 border-date/20 border-t-date" />
           <span className="sr-only" role="status">
             Chargement du modèle 3D
@@ -276,7 +427,7 @@ export function DateModelViewer({
         </div>
       ) : null}
 
-      {hasError ? (
+      {!hasModel && hasError ? (
         <div className="absolute inset-x-5 bottom-5 rounded-full border border-gold/30 bg-cream/90 px-5 py-2 text-center text-sm font-semibold text-date shadow-soft">
           Aperçu 3D temporairement indisponible.
         </div>

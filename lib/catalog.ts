@@ -169,7 +169,7 @@ export const chocolateFlavors: Flavor[] = [
     name: "Praliné Pistache",
     category: "chocolate",
     categoryLabel: "Les chocolatés",
-    image: TEMP_HERO_DATE_IMAGE,
+    image: TEMP_ROTATING_DATE_IMAGE,
     modelPath: DATE_MODEL_PATH,
     notes: "Pistache · Amande · Chocolat blanc",
     description: "Fourrée de pistache concassée sur une pâte d'amande pistache, enrobée de chocolat blanc riche."
