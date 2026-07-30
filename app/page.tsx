@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import Image from "next/image";
 import { AnimatedSection } from "@/components/animated-section";
 import { FlavorMarquee } from "@/components/home/flavor-marquee";
 import { FlavorsSection } from "@/components/home/flavors-section";
 import { Hero } from "@/components/home/hero";
 import { MenuSection } from "@/components/home/menu-section";
 import { SignatureScrollStory } from "@/components/home/signature-scroll-story";
-import { TEMP_DATE_IMAGE } from "@/lib/catalog";
+import { SignatureVideo } from "@/components/home/signature-video";
 
 export default function HomePage() {
   return (
@@ -16,17 +15,7 @@ export default function HomePage() {
       <FlavorMarquee />
       <AnimatedSection className="bg-cream px-5 py-20 sm:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-          <div className="overflow-hidden rounded-[2rem] shadow-luxe">
-            <div className="relative aspect-[4/5]">
-              <Image
-                src={TEMP_DATE_IMAGE}
-                alt="Datte gourmande réaliste"
-                fill
-                sizes="(min-width: 768px) 42vw, 100vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
+          <SignatureVideo />
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-gold">Fait main au Maroc</p>
             <h2 className="mt-4 font-heading text-4xl leading-tight text-chocolate sm:text-6xl">

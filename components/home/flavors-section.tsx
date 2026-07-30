@@ -74,7 +74,7 @@ export function FlavorsSection() {
                     key={flavor.slug}
                     className="luxury-border group overflow-hidden rounded-[1.5rem] bg-cream shadow-soft transition duration-300 hover:-translate-y-1"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-[#ead6c8]">
+                    <div className="relative aspect-[4/3] overflow-hidden bg-[#ecd8cb]">
                       <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-[1.025]">
                         <div
                           className="relative h-full w-full"
@@ -85,7 +85,13 @@ export function FlavorsSection() {
                             alt={flavor.name}
                             fill
                             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                            className="object-contain mix-blend-multiply"
+                            className="object-contain"
+                            style={{
+                              WebkitMaskImage:
+                                "radial-gradient(ellipse 94% 90% at center, #000 70%, transparent 100%)",
+                              maskImage:
+                                "radial-gradient(ellipse 94% 90% at center, #000 70%, transparent 100%)"
+                            }}
                           />
                         </div>
                       </div>
