@@ -2,8 +2,10 @@ import { Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { WHATSAPP_HELP_TEXT } from "@/lib/catalog";
 import {
   CONTACT_EMAIL,
+  CONTACT_ADDRESS,
   CONTACT_INSTAGRAM_HANDLE,
   CONTACT_INSTAGRAM_URL,
+  CONTACT_MAPS_URL,
   CONTACT_WHATSAPP_DISPLAY,
   createWhatsAppUrl
 } from "@/lib/contact";
@@ -50,9 +52,14 @@ export default function ContactPage() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="flex items-center gap-3 hover:text-date">
               <Mail size={18} className="text-gold" /> {CONTACT_EMAIL}
             </a>
-            <p className="flex items-center gap-3">
-              <MapPin size={18} className="text-gold" /> Livraison selon disponibilité au Maroc
-            </p>
+            <a
+              href={CONTACT_MAPS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-3 hover:text-date"
+            >
+              <MapPin size={18} className="text-gold" /> {CONTACT_ADDRESS}
+            </a>
           </div>
         </div>
       </section>

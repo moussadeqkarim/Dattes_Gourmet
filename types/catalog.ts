@@ -3,8 +3,13 @@ export type BoxOption = {
   name: string;
   displayName: string;
   pieces: number;
-  price: number;
+  price: number | null;
+  image: string;
   description: string;
+};
+
+export type OrderableBoxOption = BoxOption & {
+  price: number;
 };
 
 export type FlavorCategory = "chocolate" | "classic" | "sushi";

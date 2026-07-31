@@ -1,18 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { allFlavors } from "@/lib/catalog";
 
 const marqueeItems = [...allFlavors, ...allFlavors];
 
 export function FlavorMarquee() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section className="overflow-hidden border-y border-gold/25 bg-cream py-5">
       <motion.div
         className="flex w-max items-center gap-4"
-        animate={{ x: ["0%", "-50%"] }}
+        animate={shouldReduceMotion ? undefined : { x: ["0%", "-50%"] }}
         transition={{
-          duration: 34,
+          duration: 68,
           ease: "linear",
           repeat: Infinity
         }}

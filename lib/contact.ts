@@ -10,8 +10,10 @@ export const CONTACT_WHATSAPP_DISPLAY =
 export const CONTACT_WHATSAPP_NUMBER = normalizePhoneForWhatsApp(
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? CONTACT_WHATSAPP_DISPLAY
 );
+export const CONTACT_ADDRESS = "Av. Abderrahim Sekkat, Fès, Maroc";
+export const CONTACT_MAPS_URL =
+  process.env.NEXT_PUBLIC_GOOGLE_MAPS_URL ?? "https://maps.app.goo.gl/WEepxe2sGPRVyerU7";
 
 export function createWhatsAppUrl(message: string) {
   return `https://wa.me/${CONTACT_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 }
-

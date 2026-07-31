@@ -1,4 +1,4 @@
-import type { BoxOption, Flavor } from "@/types/catalog";
+import type { BoxOption, Flavor, OrderableBoxOption } from "@/types/catalog";
 
 export const BRAND_NAME = "Datte Gourmet";
 export const BRAND_TAGLINE = "L'Art de la Datte";
@@ -14,54 +14,44 @@ const flavorModelPath = (slug: string) => `/models/flavors/${slug}.glb`;
 
 export const boxes: BoxOption[] = [
   {
-    slug: "piece-unique",
-    name: "Single piece",
-    displayName: "1 pièce",
-    pieces: 1,
-    price: 13,
-    description: "Une bouchée précieuse pour découvrir une saveur au choix."
-  },
-  {
-    slug: "boite-12-pieces",
-    name: "Box 12 pieces",
-    displayName: "Boîte de 12",
+    slug: "coffret-classique-12",
+    name: "Coffret Classique 12 pieces",
+    displayName: "Coffret 12 pièces",
     pieces: 12,
     price: 190,
-    description: "Un coffret élégant pour offrir ou composer une première dégustation."
+    image: "/images/boxes/coffret-classique-12.png",
+    description: "Un écrin délicat de douze créations assorties, pensé pour offrir ou découvrir la collection."
   },
   {
-    slug: "boite-18-pieces",
-    name: "Box 18 pieces",
-    displayName: "Boîte de 18",
-    pieces: 18,
-    price: 280,
-    description: "Un assortiment généreux pour varier les familles et les textures."
+    slug: "coffret-classique-24",
+    name: "Coffret Classique 24 pieces",
+    displayName: "Coffret 24 pièces",
+    pieces: 24,
+    price: null,
+    image: "/images/boxes/coffret-classique-24.png",
+    description: "Un format généreux aux six familles de saveurs, idéal pour partager une dégustation raffinée."
   },
   {
-    slug: "boite-21-pieces",
-    name: "Box 21 pieces",
-    displayName: "Boîte de 21",
-    pieces: 21,
-    price: 320,
-    description: "Le format signature pour partager une sélection gourmande et raffinée."
-  },
-  {
-    slug: "boite-35-pieces",
-    name: "Box 35 pieces",
-    displayName: "Boîte de 35",
-    pieces: 35,
-    price: 490,
-    description: "Un grand coffret de réception, idéal pour une table élégante."
-  },
-  {
-    slug: "boite-45-pieces",
-    name: "Box 45 pieces",
-    displayName: "Boîte de 45",
-    pieces: 45,
-    price: 650,
-    description: "Le coffret prestige pour célébrer les grandes occasions."
+    slug: "coffret-classique-28",
+    name: "Coffret Classique 28 pieces",
+    displayName: "Coffret 28 pièces",
+    pieces: 28,
+    price: null,
+    image: "/images/boxes/coffret-classique-28.jpeg",
+    description: "La grande composition classique, organisée en sept rangées pour une table généreuse et élégante."
   }
 ];
+
+export const orderableBoxes = boxes.filter(
+  (box): box is OrderableBoxOption => box.price !== null
+);
+
+export const prestigeCollection = {
+  name: "Collection Prestige",
+  image: "/images/boxes/coffret-classique-28.jpeg",
+  description:
+    "Une création sur mesure pour les grandes attentions: sélection de saveurs, présentation et finitions personnalisées."
+};
 
 export const chocolateFlavors: Flavor[] = [
   {

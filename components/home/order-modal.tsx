@@ -3,16 +3,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
-import { allFlavors, boxes, flavorGroups, paymentMethods } from "@/lib/catalog";
+import { allFlavors, flavorGroups, orderableBoxes, paymentMethods } from "@/lib/catalog";
 import { createWhatsAppUrl } from "@/lib/contact";
 import { createClient } from "@/lib/supabase/client";
 import { hasSupabaseConfig } from "@/lib/supabase/config";
 import { cn, formatMad } from "@/lib/utils";
-import type { BoxOption, Flavor, PaymentMethod } from "@/types/catalog";
+import type { Flavor, OrderableBoxOption, PaymentMethod } from "@/types/catalog";
 
 type OrderModalProps = {
   open: boolean;
-  selectedBox: BoxOption | null;
+  selectedBox: OrderableBoxOption | null;
   onClose: () => void;
 };
 
@@ -53,7 +53,7 @@ function normalizeQuantity(value: number) {
 }
 
 export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
-  const [boxSlug, setBoxSlug] = useState(selectedBox?.slug ?? boxes[0].slug);
+  const [boxSlug, setBoxSlug] = useState(selectedBox?.slug ?? orderableBoxes[0].slug);
   const [quantity, setQuantity] = useState(1);
   const [selectedFlavorSlugs, setSelectedFlavorSlugs] = useState<string[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("bank_transfer");
@@ -63,7 +63,7 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
   const submitRunRef = useRef(0);
 
   const activeBox = useMemo(
-    () => boxes.find((box) => box.slug === boxSlug) ?? boxes[0],
+    () => orderableBoxes.find((box) => box.slug === boxSlug) ?? orderableBoxes[0],
     [boxSlug]
   );
   const orderTotal = activeBox.price * quantity;
@@ -286,7 +286,7 @@ export function OrderModal({ open, selectedBox, onClose }: OrderModalProps) {
                       onChange={(event) => setBoxSlug(event.target.value)}
                       className="focus-ring rounded-2xl border border-chocolate/10 bg-white px-4 py-3 text-sm font-medium text-chocolate"
                     >
-                      {boxes.map((box) => (
+                      {orderableBoxes.map((box) => (
                         <option value={box.slug} key={box.slug}>
                           {box.displayName} - {formatMad(box.price)}
                         </option>
