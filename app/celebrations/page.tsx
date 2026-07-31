@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, Heart } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { AnimatedSection } from "@/components/animated-section";
 import { createWhatsAppUrl } from "@/lib/contact";
 
@@ -112,12 +112,8 @@ export default function CelebrationsPage() {
       </AnimatedSection>
 
       <section className="bg-dark px-5 py-20 text-cream sm:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-          <div className="flex items-center gap-4 text-gold">
-            <Heart size={36} strokeWidth={1.5} aria-hidden="true" />
-            <span className="h-px flex-1 bg-gold/35" />
-          </div>
-          <div>
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-4xl">
             <p className="text-xs uppercase tracking-[0.28em] text-gold">Mariage</p>
             <h2 className="mt-4 font-heading text-4xl sm:text-6xl">Une table qui raconte votre histoire.</h2>
             <p className="mt-5 max-w-3xl text-base leading-8 text-cream/72">
