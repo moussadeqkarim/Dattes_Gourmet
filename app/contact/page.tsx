@@ -19,11 +19,11 @@ export default function ContactPage() {
         <div>
           <p className="text-sm uppercase tracking-[0.3em] text-gold">Contact</p>
           <h1 className="mt-4 font-heading text-5xl text-chocolate sm:text-7xl">
-            Parlons de votre coffret
+            Parlons de l’émotion que vous souhaitez offrir
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-8 text-chocolate/68">
-            Pour une commande, une personnalisation ou une question sur les saveurs, écrivez-nous.
-            Nous vous répondons avec plaisir sur WhatsApp ou Instagram.
+            Un merci, une célébration, une surprise ou une simple envie de faire plaisir: racontez-nous
+            le moment, nous vous aiderons à trouver l’attention qui lui ressemble.
           </p>
           <a
             href={whatsappUrl}

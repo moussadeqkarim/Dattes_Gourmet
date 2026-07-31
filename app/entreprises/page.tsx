@@ -38,11 +38,11 @@ export default function CorporateGiftsPage() {
           <div className="max-w-3xl text-cream">
             <p className="text-xs uppercase tracking-[0.3em] text-gold">Cadeaux d’entreprise</p>
             <h1 className="mt-5 text-balance font-heading text-5xl leading-tight sm:text-7xl">
-              Une attention à l’image de votre marque.
+              Une attention qui laisse une vraie impression.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-cream/80">
-              Coffrets clients, cadeaux collaborateurs et attentions événementielles, préparés avec
-              une présentation personnalisée et un accompagnement simple.
+              Pour remercier une confiance, célébrer une réussite ou souhaiter la bienvenue avec un
+              geste sincère, élégant et mémorable.
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function CorporateGiftsPage() {
           <div className="max-w-3xl">
             <p className="text-xs uppercase tracking-[0.28em] text-gold">Personnalisation</p>
             <h2 className="mt-4 font-heading text-4xl text-chocolate sm:text-6xl">
-              Du coffret à la dernière finition.
+              Votre message, jusque dans la dernière attention.
             </h2>
           </div>
           <div className="mt-12 grid gap-8 border-y border-date/20 py-10 md:grid-cols-3">

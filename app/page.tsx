@@ -19,11 +19,12 @@ export default function HomePage() {
           <div>
             <p className="text-sm uppercase tracking-[0.3em] text-gold">Fait main au Maroc</p>
             <h2 className="mt-4 font-heading text-4xl leading-tight text-chocolate sm:text-6xl">
-              Une gourmandise précieuse, entre tradition et pâtisserie fine.
+              Le plaisir d’offrir, l’émotion de se retrouver.
             </h2>
             <p className="mt-6 text-base leading-8 text-chocolate/68">
-              Nos coffrets célèbrent la datte comme un bijou de table: une chair moelleuse, des
-              garnitures généreuses, des finitions délicates et une présentation pensée pour offrir.
+              Chaque coffret porte une intention: dire merci, célébrer, surprendre ou simplement se
+              faire plaisir. Une expérience qui commence au premier regard et se prolonge bien après
+              la dernière bouchée.
             </p>
             <Link
               href="/saveurs"

@@ -45,7 +45,7 @@ export function CorporateQuoteForm() {
         >
           <option>Logo sur le coffret</option>
           <option>Carte ou message personnalisé</option>
-          <option>Palette et ruban sur mesure</option>
+          <option>Palette et ruban à vos couleurs</option>
           <option>Plusieurs éléments</option>
         </select>
       </label>

@@ -1,24 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Check, Heart, Sparkles } from "lucide-react";
+import { ArrowRight, Check, Heart } from "lucide-react";
 import { AnimatedSection } from "@/components/animated-section";
 import { createWhatsAppUrl } from "@/lib/contact";
 
 const engagementPacks = [
   {
     name: "Pack Essentiel",
-    description: "Une attention raffinée pour accompagner la demande avec douceur.",
+    description: "Un premier geste délicat pour donner à la demande toute la douceur qu’elle mérite.",
     details: ["Coffret de dattes assorties", "Finition prête à offrir", "Choix des saveurs"]
   },
   {
     name: "Pack Premium",
-    description: "Une composition plus généreuse, pensée comme une véritable pièce de réception.",
+    description: "Une attention généreuse qui transforme la réception en un moment que l’on n’oublie pas.",
     details: ["Assortiment élargi", "Présentation florale", "Palette personnalisée"]
   },
   {
     name: "Pack Signature",
-    description: "Une mise en scène entièrement personnalisée pour un moment inoubliable.",
-    details: ["Création sur mesure", "Fleurs et finitions prestige", "Coordination avec votre thème"]
+    description: "Une mise en scène inspirée par votre histoire pour faire naître une émotion unique.",
+    details: ["Création pensée pour vous", "Fleurs et finitions prestige", "Coordination avec votre thème"]
   }
 ];
 
@@ -35,7 +35,7 @@ const occasions = [
 
 export default function CelebrationsPage() {
   const weddingUrl = createWhatsAppUrl(
-    "Bonjour, je prépare un mariage et je souhaite imaginer une composition de dattes sur mesure."
+    "Bonjour, je prépare un mariage et je souhaite imaginer une composition de dattes personnalisée."
   );
 
   return (
@@ -57,8 +57,8 @@ export default function CelebrationsPage() {
               Vos plus beaux moments, composés comme un cadeau.
             </h1>
             <p className="mt-6 max-w-2xl text-base leading-8 text-cream/80">
-              Coffrets, compositions florales et présentations personnalisées autour de nos dattes
-              gourmandes, imaginés selon votre thème et le nombre d’invités.
+              Des créations qui accompagnent les regards, les promesses et les retrouvailles, pour
+              que chaque invité emporte un peu de l’émotion de votre journée.
             </p>
           </div>
         </div>
@@ -72,8 +72,8 @@ export default function CelebrationsPage() {
               Trois façons de signer l’instant.
             </h2>
             <p className="mt-5 text-base leading-8 text-chocolate/68">
-              Chaque pack est une base créative. Les formats, fleurs, couleurs et quantités sont
-              ajustés après échange avec vous.
+              Chaque proposition devient le reflet de votre histoire, de vos couleurs et de la
+              sensation que vous souhaitez laisser à ceux qui partageront ce moment.
             </p>
           </div>
 
@@ -121,8 +121,8 @@ export default function CelebrationsPage() {
             <p className="text-xs uppercase tracking-[0.28em] text-gold">Mariage</p>
             <h2 className="mt-4 font-heading text-4xl sm:text-6xl">Une table qui raconte votre histoire.</h2>
             <p className="mt-5 max-w-3xl text-base leading-8 text-cream/72">
-              De la pièce centrale aux cadeaux invités, nous concevons une présentation cohérente
-              avec votre décoration, votre palette et le rythme de votre réception.
+              De la pièce centrale aux attentions offertes aux invités, chaque détail prolonge la
+              joie de la célébration et donne à votre histoire une présence que l’on ressent.
             </p>
             <a
               href={weddingUrl}
@@ -141,10 +141,9 @@ export default function CelebrationsPage() {
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
             <div>
-              <Sparkles className="text-gold" size={30} aria-hidden="true" />
-              <p className="mt-5 text-xs uppercase tracking-[0.28em] text-gold">Occasions spéciales</p>
+              <p className="text-xs uppercase tracking-[0.28em] text-gold">Occasions spéciales</p>
               <h2 className="mt-4 font-heading text-4xl text-chocolate sm:text-5xl">
-                Chaque occasion mérite son propre écrin.
+                Les jours passent. Certaines émotions restent.
               </h2>
             </div>
             <div className="grid border-t border-date/16 sm:grid-cols-2">

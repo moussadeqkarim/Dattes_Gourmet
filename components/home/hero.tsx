@@ -21,8 +21,8 @@ export function Hero() {
             {BRAND_NAME}
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-cream/84">
-            Des dattes marocaines d’exception, garnies à la main de pralinés, fruits secs et
-            douceurs fondantes pour transformer chaque coffret en cadeau précieux.
+            Des bouchées façonnées à la main pour célébrer un amour, remercier une présence ou
+            rendre un simple instant inoubliable.
           </p>
           <Link
             href="#coffrets"

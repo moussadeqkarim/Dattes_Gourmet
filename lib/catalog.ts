@@ -20,7 +20,7 @@ export const boxes: BoxOption[] = [
     pieces: 12,
     price: 190,
     image: "/images/boxes/coffret-classique-12.png",
-    description: "Un écrin délicat de douze créations assorties, pensé pour offrir ou découvrir la collection."
+    description: "Douze attentions délicates pour dire merci, féliciter ou simplement faire plaisir."
   },
   {
     slug: "coffret-classique-24",
@@ -29,7 +29,7 @@ export const boxes: BoxOption[] = [
     pieces: 24,
     price: null,
     image: "/images/boxes/coffret-classique-24.png",
-    description: "Un format généreux aux six familles de saveurs, idéal pour partager une dégustation raffinée."
+    description: "Une invitation généreuse à se retrouver, goûter, échanger et créer un moment que l’on retient."
   },
   {
     slug: "coffret-classique-28",
@@ -38,7 +38,7 @@ export const boxes: BoxOption[] = [
     pieces: 28,
     price: null,
     image: "/images/boxes/coffret-classique-28.jpeg",
-    description: "La grande composition classique, organisée en sept rangées pour une table généreuse et élégante."
+    description: "Une composition qui habille la table et transforme les grandes retrouvailles en souvenir précieux."
   }
 ];
 
@@ -50,7 +50,7 @@ export const prestigeCollection = {
   name: "Collection Prestige",
   image: "/images/boxes/coffret-classique-28.jpeg",
   description:
-    "Une création sur mesure pour les grandes attentions: sélection de saveurs, présentation et finitions personnalisées."
+    "Pour les instants que l’on ne célèbre qu’une fois: une création pensée autour de votre histoire, de vos couleurs et de l’émotion que vous souhaitez offrir."
 };
 
 export const chocolateFlavors: Flavor[] = [

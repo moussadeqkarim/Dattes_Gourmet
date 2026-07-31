@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { boxes, prestigeCollection } from "@/lib/catalog";
 import { createWhatsAppUrl } from "@/lib/contact";
 import { formatMad } from "@/lib/utils";
@@ -23,8 +23,9 @@ export function MenuSection() {
           <p className="text-sm uppercase tracking-[0.3em] text-gold">Coffrets cadeaux</p>
           <h2 className="mt-4 font-heading text-4xl text-chocolate sm:text-6xl">Collection Classique</h2>
           <p className="mt-5 text-base leading-8 text-chocolate/68">
-            Trois formats pensés pour offrir, recevoir ou partager. Les compositions présentées sont
-            des aperçus: chaque assortiment est finalisé avec vous selon les saveurs disponibles.
+            Trois écrins pour dire merci, célébrer une présence ou prolonger le plaisir d’être
+            ensemble. Chaque assortiment est composé avec vous pour donner à votre attention une
+            saveur qui lui ressemble.
           </p>
         </div>
 
@@ -112,9 +113,7 @@ export function MenuSection() {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-dark/45" />
           </div>
           <div className="flex flex-col justify-center px-7 py-10 sm:px-10 lg:px-12">
-            <Sparkles className="text-gold" size={28} aria-hidden="true" />
-            <p className="mt-5 text-xs uppercase tracking-[0.28em] text-gold">Sur mesure</p>
-            <h3 className="mt-3 font-heading text-4xl sm:text-5xl">{prestigeCollection.name}</h3>
+            <h3 className="font-heading text-4xl sm:text-5xl">{prestigeCollection.name}</h3>
             <p className="mt-5 text-sm leading-7 text-cream/72">{prestigeCollection.description}</p>
             <a
               href={prestigeWhatsAppUrl}
@@ -122,7 +121,7 @@ export function MenuSection() {
               rel="noreferrer"
               className="focus-ring mt-7 inline-flex w-fit items-center gap-2 rounded-full border border-gold/55 px-6 py-3 text-sm font-semibold text-cream transition hover:bg-gold hover:text-chocolate"
             >
-              Imaginer mon coffret
+              Créer un souvenir
               <ArrowRight size={17} />
             </a>
           </div>

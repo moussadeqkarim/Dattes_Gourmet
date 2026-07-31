@@ -44,8 +44,8 @@ export function SignatureScrollStory() {
           </h2>
 
           <p className="mt-8 max-w-2xl text-base leading-8 text-cream/75 sm:text-lg">
-            Chaque création est garnie, enrobée et finie à la main pour offrir un instant aussi
-            précieux à regarder qu’à savourer.
+            Chaque création porte un geste, une attention, une histoire. Un plaisir à découvrir des
+            yeux, à savourer lentement et à garder en mémoire.
           </p>
 
           <div className="mt-12 h-px w-full max-w-xl overflow-hidden bg-cream/16">
